@@ -77,6 +77,10 @@ class AlbumController extends Controller
 
     public function uploadImages(Request $request, $id)
     {         //upload images on server
+
+        $request->validate([
+            'dzfile' => 'required|image',
+        ]);
         $album = Album::findOrFail($id);
         $file = $request->file('dzfile');
         $image_name = $file->getclientoriginalname();
@@ -112,6 +116,10 @@ class AlbumController extends Controller
     }
     public function destroyOrMove(Request $request, $id)
     {
+
+        $request->validate([
+            'submit' => 'required|in:delete,move', 
+        ]);
         $album = Album::findOrFail($id);
 
         if ($request->submit == 'delete') {
